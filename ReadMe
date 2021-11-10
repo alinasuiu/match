@@ -1,0 +1,27 @@
+I created a dataclass, Card, that would represent a card with its number and suit. This dataclass is made hashable so that I can keep track of each card type.
+
+The Game class contains all the operations needed to play the game. The constructor will throw an exception if the numberOfDecks is anything but a positive integer or if the matchType inputed by the user is not found in the . It contains the following attributes:
+ - players - a list object containing a list of players. In our case, it's ["A","B"], but if we wanted to add more players, it's easy to do so
+ - values - a list containing all possible values a card can have
+ - suites - a list containing all possible suits a card can have
+ - matchTypes - a map containing key value pairs that makes it easy to add new match types in the future
+        - key - string - the name of a match type - in our case "suits","values" or "Both suits and values"
+        - value - function - does the match determined by the key
+ - pile - an integer containing the number of cards in the current pile. There is no need to keep the card objects in the pile since the only things that I need to determine the winner is the scores of the players
+ - matchType - a string takes the value of the matchType defined by the user as long as it is contained in the matchTypes map
+ - deck - a map containing:
+        - key = a Card object denoting a type of card (for example ace of spades)
+        - value = number of cards of the key type that are left in the deck. This starts at numberOfDecks since each card only has one card of each type
+ - scores - a list containing the scores of each player, starting at 0 for all
+
+I am presuming that the deck contains numberOfDecks cards and all the decks are complete 52 card sets.
+
+In order to maintain a simulation of a shuffled deck of cards, each time a new card needs to be picked, I used a random number generator (randrange) on the keys of the deck attribute. Since the random number generator is not weighted in any way, I believe it's a good simulation of a shuffled deck of cards from which one can pick a card sequentially.
+
+The game goes on as long as there are cards left in the deck. For each player in the game, a card gets picked at random from the keys of the deck map. After the card gets picked, it gets added to the pile, therefore pile increases by 1. The cards for each player are added to the cards list. After the cards are added to the cards list, I needed to account for the card being taken out of the deck. I did that by decreasing the value of deck[card]. After the last card of its type gets picked out of the card, the element with that key is removed from the deck map.
+The cards added to the cards list are then compared using the criteria (matchType) inputted by the user. If they match, then a player is picked at random. This player takes the cards in the pile. In this context, this means that the score corresponding to the player chosen by the random generator increases by the number in pile. The pile gets reset to 0;
+
+
+
+
+
